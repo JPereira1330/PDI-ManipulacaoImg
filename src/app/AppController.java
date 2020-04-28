@@ -33,7 +33,7 @@ public class AppController {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagens", "*.jpg", "*.JPG", "*.png",
 				"*.PNG", "*.gif", "*.GIF", "*.bmp", "*.BMP"));
-		fileChooser.setInitialDirectory(new File("C:/Users/gabri/Desktop/PDI/img"));
+		fileChooser.setInitialDirectory(new File("./src/img/"));
 		File imgSelec = fileChooser.showOpenDialog(null);
 		try {
 			if (imgSelec != null) {
