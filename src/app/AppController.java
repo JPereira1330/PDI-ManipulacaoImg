@@ -1,7 +1,13 @@
 package app;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +18,7 @@ public class AppController {
 	ImageView imageView1;
 	
 	private Image img1;
+	private Image img2;
 	
 	@FXML
 	public void abreImagem1() {
@@ -43,5 +50,25 @@ public class AppController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@FXML
+	public void salvar() {
+		if (img2 != null) { // Verifica se há imagem 3
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagem", "*.png"));
+			fileChooser.setInitialDirectory(new File("C:/Users/gabri/Desktop/PDI/img"));
+			File file = fileChooser.showSaveDialog(null);
+			if (file != null) {
+				BufferedImage bImg = SwingFXUtils.fromFXImage(img2, null);
+				try {
+					ImageIO.write(bImg, "PNG", file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Não é possivel salvar a imagem");
+		}
 	}
 }

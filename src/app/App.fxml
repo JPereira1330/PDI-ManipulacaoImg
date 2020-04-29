@@ -22,7 +22,7 @@
                 <Menu mnemonicParsing="false" text="Arquivos">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#abreImagem1" text="Adicionar Imagem" />
-                        <MenuItem mnemonicParsing="false" text="Salvar imagem" />
+                        <MenuItem mnemonicParsing="false" onAction="#salvar" text="Salvar imagem" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Filtros">
