@@ -105,4 +105,8 @@ public class AppController {
 			JOptionPane.showMessageDialog(null, "N�o � possivel salvar a imagem");
 		}
 	}
+	@FXML
+	public void ruidos() {
+		
+	}
 }
