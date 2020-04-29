@@ -1,5 +1,13 @@
 package app;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,12 +16,38 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 public class AppController {
+
+	@FXML
+	public void abreJanelaAjuda(ActionEvent event) {
+		
+		Stage stage;
+		Parent root;
+		FXMLLoader loader;
+		
+		AjudaController controller;
+		
+		try {
+			stage = new Stage();
+			loader = new FXMLLoader(getClass().getResource("App.fxml"));
+			
+			root = loader.load();
+			stage.setScene(new Scene(root));
+			stage.initOwner( ((Node) event.getSource()).getScene().getWindow() );
+			stage.show();
+			
+			controller = (AjudaController) loader.getController();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	@FXML
 	ImageView imageView1;
 	
@@ -54,7 +88,7 @@ public class AppController {
 	
 	@FXML
 	public void salvar() {
-		if (img2 != null) { // Verifica se há imagem 3
+		if (img2 != null) { // Verifica se hï¿½ imagem 3
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagem", "*.png"));
 			fileChooser.setInitialDirectory(new File("./src/img/"));
@@ -68,7 +102,7 @@ public class AppController {
 				}
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Não é possivel salvar a imagem");
+			JOptionPane.showMessageDialog(null, "Nï¿½o ï¿½ possivel salvar a imagem");
 		}
 	}
 }
