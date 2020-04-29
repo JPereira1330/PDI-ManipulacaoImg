@@ -57,7 +57,7 @@ public class AppController {
 		if (img2 != null) { // Verifica se há imagem 3
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagem", "*.png"));
-			fileChooser.setInitialDirectory(new File("C:/Users/gabri/Desktop/PDI/img"));
+			fileChooser.setInitialDirectory(new File("./src/img/"));
 			File file = fileChooser.showSaveDialog(null);
 			if (file != null) {
 				BufferedImage bImg = SwingFXUtils.fromFXImage(img2, null);
