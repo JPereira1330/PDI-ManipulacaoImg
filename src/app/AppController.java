@@ -34,6 +34,9 @@ public class AppController {
 			
 			root = loader.load();
 			stage.setScene(new Scene(root));
+			stage.setTitle("PDI - Ajuda");
+			stage.getIcons().add(new Image("./img/icon.png"));
+			stage.setResizable(false);
 			//stage.initOwner( ((Node) event.getSource()).getScene().getWindow() );
 			stage.show();
 		}catch(Exception e) {
