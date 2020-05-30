@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 import java.awt.image.BufferedImage;
@@ -34,6 +35,9 @@ public class AppController {
 			
 			root = loader.load();
 			stage.setScene(new Scene(root));
+			stage.setTitle("PDI - Ajuda");
+			stage.getIcons().add(new Image("./img/icon.png"));
+			stage.setResizable(false);
 			//stage.initOwner( ((Node) event.getSource()).getScene().getWindow() );
 			stage.show();
 		}catch(Exception e) {
@@ -82,7 +86,7 @@ public class AppController {
 	
 	@FXML
 	public void salvar() {
-		if (img2 != null) { // Verifica se h� imagem 3
+		if (img2 != null) { // Verifica se ha imagem 3
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imagem", "*.png"));
 			fileChooser.setInitialDirectory(new File("./src/img/"));
@@ -96,11 +100,54 @@ public class AppController {
 				}
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "N�o � possivel salvar a imagem");
+			JOptionPane.showMessageDialog(null, "Nao foi possivel salvar a imagem");
 		}
 	}
+	
 	@FXML
 	public void ruidos() {
 		
+		/*vizinhos =  new ToggleGroup();
+		vizX.setToggleGroup(vizinhos);
+		
+		if (vizinhos.getSelectedToggle() == viz3)
+			img3 = Pdi.ruidos(img1, 1);
+		
+		atualizaImagem();
+		*/
 	}
+	
+	private void atualizaImagem() {
+		
+		/*imageView3.setImage(img3);
+		imageView3.setFitWidth(img3.getWidth());
+		imageView3.setFitHeight(img3.getHeight());*/
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
