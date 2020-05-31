@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
@@ -18,39 +19,57 @@ import javax.swing.JOptionPane;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 
 public class AppController {
-
-	@FXML
-	public void abreJanelaAjuda(ActionEvent event) {
-		
-		Stage stage;
-		Parent root;
-		FXMLLoader loader;
-		
-		try {
-			stage = new Stage();
-			loader = new FXMLLoader(getClass().getResource("Ajuda.fxml"));
-			
-			root = loader.load();
-			stage.setScene(new Scene(root));
-			stage.setTitle("PDI - Ajuda");
-			stage.getIcons().add(new Image("./img/icon.png"));
-			stage.setResizable(false);
-			//stage.initOwner( ((Node) event.getSource()).getScene().getWindow() );
-			stage.show();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
+	
+	private double xOffSet = 0;
+	private double yOffSet = 0;
+	
+	@FXML private Button btMin;
+	@FXML private Button btMax;
+	@FXML private Button btClose;
+	@FXML private Pane topPane;
 	
 	@FXML
 	ImageView imageView1;
 	
 	private Image img1;
 	private Image img2;
+	
+	@FXML
+	protected void handleCloseBtn(ActionEvent event) {
+		Stage stage = (Stage) btClose.getScene().getWindow();
+		stage.close();
+	}
+	
+	@FXML
+	protected void handleMinBtn(ActionEvent event) {
+		Stage stage = (Stage) btMin.getScene().getWindow();
+		stage.setIconified(true);
+	}
+	
+	@FXML
+	protected void handleMaxBtn(ActionEvent event) {
+		Stage stage = (Stage) btMax.getScene().getWindow();
+		stage.setMaximized(true);
+	}
+	
+	@FXML
+	protected void handleClickPane(MouseEvent event) {
+		Stage stage = (Stage) topPane.getScene().getWindow();
+		xOffSet = stage.getX() - event.getScreenX();
+		yOffSet = stage.getY() - event.getScreenY();
+	}
+	
+	@FXML
+	protected void handleMovPane(MouseEvent event) {
+		Stage stage = (Stage) topPane.getScene().getWindow();
+		stage.setX(event.getScreenX() + xOffSet);
+		stage.setY(event.getScreenY() + yOffSet);
+	}
 	
 	@FXML
 	public void abreImagem1() {
@@ -102,6 +121,30 @@ public class AppController {
 		} else {
 			JOptionPane.showMessageDialog(null, "Nao foi possivel salvar a imagem");
 		}
+	}
+	
+	@FXML
+	public void abreJanelaAjuda(ActionEvent event) {
+		
+		Stage stage;
+		Parent root;
+		FXMLLoader loader;
+		
+		try {
+			stage = new Stage();
+			loader = new FXMLLoader(getClass().getResource("Ajuda.fxml"));
+			
+			root = loader.load();
+			stage.setScene(new Scene(root));
+			stage.setTitle("PDI - Ajuda");
+			stage.getIcons().add(new Image("./img/icon.png"));
+			stage.setResizable(false);
+			//stage.initOwner( ((Node) event.getSource()).getScene().getWindow() );
+			stage.show();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@FXML

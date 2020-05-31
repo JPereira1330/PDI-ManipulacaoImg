@@ -1,1 +1,58 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+/* TEXTIFIELD */
+.texteditted{
+    -fx-padding: 15 22 15 22;   
+    -fx-background-radius: 1;
+    -fx-background-color: none;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+/* BOTÕES DE FECHAR, MAXIMIZAR E MINIMIZAR */
+.titleButton{
+	-fx-padding: 5 10 5 10;   
+    -fx-background-radius: 1;
+    -fx-background-color: none;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.titleButton:hover{
+    -fx-background-color: #3a3a3a;
+}
+
+/* BOTÃO DO MENU BAR */
+.titleMenu{
+	-fx-background-color: none;
+	-fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+}
+
+.titleMenu:hover{
+	-fx-background-color: none;
+	-fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+}
+
+/* BOTÃO DO MENU */
+.menuButton {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #0d0d0d;
+    -fx-border-width: 1;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-background-radius: 1;
+    -fx-background-color: none;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.menuButton:hover {
+    -fx-background-color: #3a3a3a;
+}
