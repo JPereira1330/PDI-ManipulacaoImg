@@ -148,16 +148,18 @@ public class AppController {
 	}
 	
 	@FXML
-	public void ruidos() {
-		
-		/*vizinhos =  new ToggleGroup();
-		vizX.setToggleGroup(vizinhos);
-		
-		if (vizinhos.getSelectedToggle() == viz3)
-			img3 = Pdi.ruidos(img1, 1);
-		
-		atualizaImagem();
-		*/
+	public void media3() {
+		if(img1 != null) {
+
+			/* Chama método RUIDOS da classe FILTROS, passando como parametro a img e o número 1,
+			 * q segundo a classe CONSTANTES siginifica o filtro media 3.
+			 */
+			img2 = Filtros.ruidos(img1, 1);
+			atualizaImagem();
+		}else {
+			JOptionPane.showMessageDialog(null, "Selecione uma imagem");
+		}
+	
 	}
 	
 	private void atualizaImagem() {
