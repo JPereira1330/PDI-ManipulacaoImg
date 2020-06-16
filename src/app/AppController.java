@@ -1,14 +1,5 @@
 package app;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ToggleGroup;
-import javafx.stage.Stage;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,11 +8,18 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class AppController {
 	
@@ -54,7 +52,11 @@ public class AppController {
 	@FXML
 	protected void handleMaxBtn(ActionEvent event) {
 		Stage stage = (Stage) btMax.getScene().getWindow();
-		stage.setMaximized(true);
+		if(!stage.isMaximized()) {
+			stage.setMaximized(true);
+		} else {
+			stage.setMaximized(false);
+		}
 	}
 	
 	@FXML
