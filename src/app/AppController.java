@@ -46,7 +46,11 @@ public class AppController {
 	@FXML
 	protected void handleMaxBtn(ActionEvent event) {
 		Stage stage = (Stage) btMax.getScene().getWindow();
-		stage.setMaximized(true);
+		if(!stage.isMaximized()) {
+			stage.setMaximized(true);
+		} else {
+			stage.setMaximized(false);
+		}
 	}
 	
 	@FXML
