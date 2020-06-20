@@ -18,7 +18,7 @@
    <children>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #7D7D8C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
                 <Tab text="Imagem Inicial">
                   <content>
@@ -39,7 +39,9 @@
                      <children>
                         <Button mnemonicParsing="false" prefWidth="150.0" styleClass="texteditted" stylesheets="@application.css" text="ARTIGO" textFill="#0d0d0d" />
                         <Button mnemonicParsing="false" prefWidth="150.0" styleClass="menuButton" stylesheets="@application.css" text="Filtro Wiener" textFill="#0d0d0d" />
-                        <Button mnemonicParsing="false" prefWidth="150.0" styleClass="menuButton" stylesheets="@application.css" text="Filtro 3x3" textFill="#0d0d0d" />
+                        <Button mnemonicParsing="false" onAction="#aplicarMedia3" prefWidth="150.0" styleClass="menuButton" stylesheets="@application.css" text="Filtro 3x3" textFill="#0d0d0d" />
+                        <Button mnemonicParsing="false" prefWidth="150.0" styleClass="texteditted" stylesheets="@application.css" text="MELHORADO" textFill="#0d0d0d" />
+                        <Button mnemonicParsing="false" onAction="#aplicarJRG" prefWidth="150.0" styleClass="menuButton" stylesheets="@application.css" text="Filtro JRG" textFill="#0d0d0d" />
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -74,7 +76,7 @@
                       <Menu mnemonicParsing="false" text="Filtros">
                         <items>
                               <MenuItem mnemonicParsing="false" text="Filtro Nosso (Nosso)" />
-                          <MenuItem mnemonicParsing="false" text="Filtro media 3 (Artigo)" />
+                          <MenuItem mnemonicParsing="false" onAction="#aplicarMedia3" text="Filtro media 3 (Artigo)" />
                               <MenuItem mnemonicParsing="false" text="Filtro Wiener (Artigo)" />
                         </items>
                       </Menu>
