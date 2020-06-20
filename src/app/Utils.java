@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
@@ -127,6 +128,17 @@ public class Utils {
 
 		matOut.put(0, 0, data);
 		return matOut;
+	}
+
+	public static int getGrayScale(int rgb) {
+		
+		int r = (rgb >> 16) & 0xff;
+		int g = (rgb >> 8) & 0xff;
+		int b = (rgb) & 0xff;
+
+		int gray = (int) (0.2126 * r + 0.7152 * g + 0.0722 * b);
+
+		return gray;
 	}
 
 }
