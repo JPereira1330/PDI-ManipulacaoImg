@@ -3,6 +3,7 @@ package app;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
@@ -23,6 +24,8 @@ public class AppController {
 	@FXML private Button btClose;
 	@FXML private Pane topPane;
 
+	@FXML private Slider slidA;
+	
 	@FXML private TabPane tabPane;
 	
 	@FXML ImageView imageView1;
@@ -111,13 +114,15 @@ public class AppController {
 	
 	@FXML
 	public void aplicarJRG() {
-		if(img1 == null) {
-			JOptionPane.showMessageDialog(null, "Selecione uma imagem");
+		
+		if(img1 != null) {
+			img1 = Filtros.jrg(img1, (slidA.getValue() / 250));
+			Utils.atualizaImageView(imageView1, img1);
+			Utils.createANewTab(tabPane);
 			return;
 		}
-		img1 = Filtros.jrg(img1);
-		Utils.atualizaImageView(imageView1, img1);
-		Utils.createANewTab(tabPane);
+
+		JOptionPane.showMessageDialog(null, "Selecione uma imagem");
 	}	
 }
 

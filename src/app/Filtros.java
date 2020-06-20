@@ -1,5 +1,10 @@
 package app;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import org.opencv.core.Core;
@@ -11,6 +16,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.osgi.OpenCVInterface;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -55,12 +61,10 @@ public class Filtros {
 		}
 	}
 
-	public static Image jrg(Image imagem) {
+	public static Image jrg(Image imagem, double valueSlider) {
 
-		double porcentagemSubImg01;
-		double porcentagemSubImg02;
-		
-		Image auxiliar01;
+		Image parte01;
+		Image parte02;
 		Image resultado;
 
 		if (imagem == null) {
@@ -68,98 +72,33 @@ public class Filtros {
 		}
 
 		// Removendo ruido da imagem
-		resultado = ruidos(imagem, Constantes.VIZINHOS3x3);
-		if (resultado == null) {
+		parte01 = ruidos(imagem, Constantes.VIZINHOS3x3);
+		if (parte01 == null) {
 			JOptionPane.showConfirmDialog(null, "Erro ao remover ruido", "Erro detectado", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 
 		// Capturando as bordas da imagem
-/*		auxiliar01 = sobel(resultado);
-		if (auxiliar01 == null) {
+		parte02 = sobel(imagem);
+		if (parte02 == null) {
 			JOptionPane.showConfirmDialog(null, "Erro ao aplicar sobel", "Erro detectado", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 
-		porcentagemSubImg01 = 100 / 100;
-		porcentagemSubImg02 =  50 / 100;
-		
-		resultado = subtracao(resultado, auxiliar01, porcentagemSubImg01, porcentagemSubImg02);
-		if (resultado == null) {
-			JOptionPane.showConfirmDialog(null, "Erro ao subtrair imagens", "Erro detectado", JOptionPane.ERROR_MESSAGE);
+		parte01 = subtracao(parte01, parte02, 1, 0.5);
+		if (parte01 == null) {
+			JOptionPane.showConfirmDialog(null, "Erro ao subtrair imagens", "Erro detectado",
+					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 
-		*/
+		parte02 = aplicarLimiarizacao(imagem, valueSlider);
+		
+		resultado = adicao(parte01, parte02, 1, 0.1);
+
 		return resultado;
 	}
 
-	private static Image canny(Image img) {
-
-		Mat dst;
-		Mat src, srcBlur, srcEdges;
-		
-		src = Utils.image2Mat(img);
-		if(src.empty()) {
-			return null;
-		}
-	
-		srcBlur = new Mat();
-		Imgproc.blur(src, srcBlur, new Size(3,3));
-		
-		srcEdges = new Mat();
-		Imgproc.Canny(srcBlur, srcEdges, 3, 9, 3, false);
-		
-		dst = new Mat(src.size(), CvType.CV_8UC3, Scalar.all(0));
-        src.copyTo(dst, srcEdges);
-		
-        return Utils.mat2Image(dst);
-	}
-	
-	private static Image sobel(Image img) {
-		
-		Mat grad;
-		Mat src, src_gray; 
-		Mat grad_x, grad_y;
-		Mat abs_grad_x, abs_grad_y;
-		
-        int scale = 1;
-        int delta = 0;
-        int ddepth = CvType.CV_16S;
-		
-		src_gray = new Mat();
-		
-		src = Utils.image2Mat(img);
-
-		if(src.empty()) {
-			JOptionPane.showConfirmDialog(null, "Erro ao popular", "Erro detectado", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);			
-			return null;
-		}
-		
-		// Reduz noise
-		Imgproc.GaussianBlur(src, src, new Size(3,3), 0,0, Core.BORDER_DEFAULT);
-		
-		// Converte para cinza
-		Imgproc.cvtColor(src, src_gray, Imgproc.COLOR_RGB2GRAY);
-		
-		grad_x = new Mat();
-		Imgproc.Sobel(src_gray, grad_x, ddepth, 1, 0, 3, scale, delta, Core.BORDER_DEFAULT);
-		
-		grad_y = new Mat();
-		Imgproc.Sobel(src_gray, grad_y, ddepth, 0, 1, 3, scale, delta, Core.BORDER_DEFAULT);
-	
-		abs_grad_x = new Mat();
-		Core.convertScaleAbs(grad_x, abs_grad_x);
-		
-		abs_grad_y = new Mat();
-		Core.convertScaleAbs(grad_y, abs_grad_y);
-		
-		grad = new Mat();
-		Core.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, grad);
-		
-		return Utils.mat2Image(grad);
-	}
-	
 	private static Image subtracao(Image img1, Image img2, double ti1, double ti2) {
 
 		int w, h;
@@ -203,4 +142,145 @@ public class Filtros {
 		return wi;
 	}
 
+	public static Image adicao(Image img1, Image img2, double ti1, double ti2) {
+
+		int w, h;
+		int h1, h2;
+		int w1, w2;
+
+		h1 = (int) img1.getHeight();
+		h2 = (int) img2.getHeight();
+
+		w1 = (int) img1.getWidth();
+		w2 = (int) img2.getWidth();
+
+		w = Math.min(w1, w2);
+		h = Math.min(h1, h2);
+
+		PixelReader pr1 = img1.getPixelReader();
+		PixelReader pr2 = img2.getPixelReader();
+
+		WritableImage wi = new WritableImage(w, h);
+		PixelWriter pw = wi.getPixelWriter();
+
+		for (int i = 1; i < w; i++) {
+			for (int j = 1; j < h; j++) {
+
+				Color corImg1 = pr1.getColor(i, j);
+				Color corImg2 = pr2.getColor(i, j);
+
+				double r = (corImg1.getRed() * ti1) + (corImg2.getRed() * ti2);
+				double g = (corImg1.getGreen() * ti1) + (corImg2.getGreen() * ti2);
+				double b = (corImg1.getBlue() * ti1) + (corImg2.getBlue() * ti2);
+
+				r = r > 1 ? 1 : r;
+				g = g > 1 ? 1 : g;
+				b = b > 1 ? 1 : b;
+
+				Color newCor = new Color(r, g, b, 1);
+				pw.setColor(i, j, newCor);
+			}
+		}
+
+		return wi;
+	}
+	
+	public static Image sobel(Image img) {
+
+        BufferedImage image = SwingFXUtils.fromFXImage(img, null);
+
+        int x = image.getWidth();
+        int y = image.getHeight();
+
+        int[][] edgeColors = new int[x][y];
+        int maxGradient = -1;
+
+        for (int i = 1; i < x - 1; i++) {
+            for (int j = 1; j < y - 1; j++) {
+
+				int val00 = Utils.getGrayScale(image.getRGB(i - 1, j - 1));
+                int val01 = Utils.getGrayScale(image.getRGB(i - 1, j));
+                int val02 = Utils.getGrayScale(image.getRGB(i - 1, j + 1));
+
+                int val10 = Utils.getGrayScale(image.getRGB(i, j - 1));
+                int val11 = Utils.getGrayScale(image.getRGB(i, j));
+                int val12 = Utils.getGrayScale(image.getRGB(i, j + 1));
+
+                int val20 = Utils.getGrayScale(image.getRGB(i + 1, j - 1));
+                int val21 = Utils.getGrayScale(image.getRGB(i + 1, j));
+                int val22 = Utils.getGrayScale(image.getRGB(i + 1, j + 1));
+
+                int gx =  ((-1 * val00) + (0 * val01) + (1 * val02)) 
+                        + ((-2 * val10) + (0 * val11) + (2 * val12))
+                        + ((-1 * val20) + (0 * val21) + (1 * val22));
+
+                int gy =  ((-1 * val00) + (-2 * val01) + (-1 * val02))
+                        + ((0 * val10) + (0 * val11) + (0 * val12))
+                        + ((1 * val20) + (2 * val21) + (1 * val22));
+
+                double gval = Math.sqrt((gx * gx) + (gy * gy));
+                int g = (int) gval;
+
+                if(maxGradient < g) {
+                    maxGradient = g;
+                }
+
+                edgeColors[i][j] = g;
+            }
+        }
+
+        double scale = 255.0 / maxGradient;
+
+        for (int i = 1; i < x - 1; i++) {
+            for (int j = 1; j < y - 1; j++) {
+                int edgeColor = edgeColors[i][j];
+                edgeColor = (int)(edgeColor * scale);
+                edgeColor = 0xff000000 | (edgeColor << 16) | (edgeColor << 8) | edgeColor;
+
+                image.setRGB(i, j, edgeColor);
+            }
+        }
+
+        img = SwingFXUtils.toFXImage(image, null);
+        
+		return img;
+	}
+
+	public static Image aplicarLimiarizacao(Image imagem, double value) {
+
+		int w, h;
+		Color corA, corN;
+		PixelReader pr;
+		WritableImage wi;
+		PixelWriter pw;
+
+		if (imagem == null) {
+			JOptionPane.showConfirmDialog(null, "Nao foi possivel localizar imagem", "Erro detectado",
+					JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
+		
+		w = (int) imagem.getWidth();
+		h = (int) imagem.getHeight();
+
+		pr = imagem.getPixelReader();
+		wi = new WritableImage(w, h);
+		pw = wi.getPixelWriter();
+
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
+
+				corA = pr.getColor(i, j);
+				if (corA.getRed() <= value)
+					pw.setColor(i, j, Color.BLACK);
+				else {
+					pw.setColor(i, j, Color.WHITE);
+				}
+
+			}
+		}
+
+		return wi;
+	}
+	
 }
