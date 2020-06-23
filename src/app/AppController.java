@@ -31,7 +31,7 @@ public class AppController {
 	@FXML ImageView imageView2;
 	
 	private Image img1;
-	//private Image img2;
+	private Image imgAux;
 	
 	@FXML
 	protected void handleCloseBtn(ActionEvent event) {
@@ -85,7 +85,13 @@ public class AppController {
 			JOptionPane.showMessageDialog(null, "Nao foi possivel salvar a imagem");
 			return;
 		}
-		FileManipulation.salvaImagem(img1);
+		
+		if(imgAux != null) {
+			FileManipulation.salvaImagem(imgAux);
+		}else {
+			FileManipulation.salvaImagem(img1);
+		}
+		
 	}
 	
 	
@@ -95,9 +101,9 @@ public class AppController {
 			JOptionPane.showMessageDialog(null, "Selecione uma imagem");
 			return;
 		}
-		img1 = Filtros.ruidos(img1, Constantes.VIZINHOS3x3);
+		imgAux = Filtros.ruidos(img1, Constantes.VIZINHOS3x3);
 		Utils.atualizaImageView(imageView1, img1);
-		Utils.createANewTab(tabPane, img1);
+		Utils.createANewTab(tabPane, imgAux);
 	}	
 	
 	@FXML
@@ -106,18 +112,18 @@ public class AppController {
 			JOptionPane.showMessageDialog(null, "Selecione uma imagem");
 			return;
 		}
-		img1 = Filtros.sobel(img1);
+		imgAux = Filtros.sobel(img1);
 		Utils.atualizaImageView(imageView1, img1);
-		Utils.createANewTab(tabPane, img1);
+		Utils.createANewTab(tabPane, imgAux);
 	}	
 	
 	@FXML
 	public void aplicarJRG() {
 		
 		if(img1 != null) {
-			img1 = Filtros.jrg(img1, (slidA.getValue() / 250));
+			imgAux = Filtros.jrg(img1, (slidA.getValue() / 250));
 			Utils.atualizaImageView(imageView1, img1);
-			Utils.createANewTab(tabPane, img1);
+			Utils.createANewTab(tabPane, imgAux);
 			return;
 		}
 

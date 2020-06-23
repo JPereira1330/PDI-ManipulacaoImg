@@ -31,7 +31,6 @@ public class Utils {
 		Tab tab = new Tab(name, novaImage);
 		tab.setClosable(true);
 		tabPane.getTabs().add(tab);
-		System.out.println(tab.isClosable());
 	}
 
 	public static void eliminaRuido(Image imagem, Pixel p) {

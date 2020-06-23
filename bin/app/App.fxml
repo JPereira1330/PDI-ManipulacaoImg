@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -20,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.AppController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.AppController">
    <children>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #7D7D8C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -47,6 +43,7 @@
                         <Button mnemonicParsing="false" onAction="#aplicarWiener" prefWidth="150.0" styleClass="menuButton" stylesheets="@application.css" text="Filtro Wiener" textFill="#0d0d0d" />
                         <Button mnemonicParsing="false" onAction="#aplicarMedia3" prefWidth="150.0" styleClass="menuButton" stylesheets="@application.css" text="Filtro 3x3" textFill="#0d0d0d" />
                         <Button mnemonicParsing="false" prefWidth="150.0" styleClass="texteditted" stylesheets="@application.css" text="MELHORADO" textFill="#0d0d0d" />
+                        <Label text="Limiarização" />
                         <Slider fx:id="slidA" majorTickUnit="50.0" max="200.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" value="100.0">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
