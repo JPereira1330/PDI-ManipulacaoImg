@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Window {
 
@@ -24,6 +25,7 @@ public class Window {
 			stage.setTitle("PDI - Ajuda");
 			stage.getIcons().add(new Image("./img/icon.png"));
 			stage.setResizable(false);
+			stage.initStyle(StageStyle.TRANSPARENT);
 			stage.show();
 		}catch(Exception e) {
 			e.printStackTrace();

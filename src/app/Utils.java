@@ -1,6 +1,5 @@
 package app;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
@@ -26,12 +25,13 @@ public class Utils {
 		imgView.setFitHeight(img.getHeight());
 	}
 
-	public static void createANewTab(TabPane tabPane) {
+	public static void createANewTab(TabPane tabPane, Image img) {
 		String name = "Resultado - " + tabPane.getTabs().size();
-
-		Tab tab = new Tab(name);
-
+		ImageView novaImage = new ImageView(img);
+		Tab tab = new Tab(name, novaImage);
+		tab.setClosable(true);
 		tabPane.getTabs().add(tab);
+		System.out.println(tab.isClosable());
 	}
 
 	public static void eliminaRuido(Image imagem, Pixel p) {
@@ -131,7 +131,7 @@ public class Utils {
 	}
 
 	public static int getGrayScale(int rgb) {
-		
+
 		int r = (rgb >> 16) & 0xff;
 		int g = (rgb >> 8) & 0xff;
 		int b = (rgb) & 0xff;

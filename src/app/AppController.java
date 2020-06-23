@@ -1,18 +1,17 @@
 package app;
 
+import javax.swing.JOptionPane;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
-import javafx.stage.Stage;
-
-import javax.swing.JOptionPane;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class AppController {
 	
@@ -32,7 +31,7 @@ public class AppController {
 	@FXML ImageView imageView2;
 	
 	private Image img1;
-	private Image img2;
+	//private Image img2;
 	
 	@FXML
 	protected void handleCloseBtn(ActionEvent event) {
@@ -98,7 +97,7 @@ public class AppController {
 		}
 		img1 = Filtros.ruidos(img1, Constantes.VIZINHOS3x3);
 		Utils.atualizaImageView(imageView1, img1);
-		Utils.createANewTab(tabPane);
+		Utils.createANewTab(tabPane, img1);
 	}	
 	
 	@FXML
@@ -107,9 +106,9 @@ public class AppController {
 			JOptionPane.showMessageDialog(null, "Selecione uma imagem");
 			return;
 		}
-		img1 = Filtros.ruidos(img1, 1);
+		img1 = Filtros.sobel(img1);
 		Utils.atualizaImageView(imageView1, img1);
-		Utils.createANewTab(tabPane);
+		Utils.createANewTab(tabPane, img1);
 	}	
 	
 	@FXML
@@ -118,7 +117,7 @@ public class AppController {
 		if(img1 != null) {
 			img1 = Filtros.jrg(img1, (slidA.getValue() / 250));
 			Utils.atualizaImageView(imageView1, img1);
-			Utils.createANewTab(tabPane);
+			Utils.createANewTab(tabPane, img1);
 			return;
 		}
 
